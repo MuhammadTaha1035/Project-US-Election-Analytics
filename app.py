@@ -1,6 +1,12 @@
 import streamlit as st
 import subprocess
+import os
+
 import sys
+
+# Grant permissions to install packages
+os.system("chmod -R 777 /home/adminuser/venv/lib/python3.12/site-packages/")
+
 
 # Ensure plotly is installed
 try:

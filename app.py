@@ -2,6 +2,10 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+import pkg_resources
+
+installed_packages = [pkg.key for pkg in pkg_resources.working_set]
+print("Installed packages:", installed_packages)
 
 # Load dataset
 @st.cache_data

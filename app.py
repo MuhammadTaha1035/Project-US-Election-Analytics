@@ -10,6 +10,7 @@ import pkg_resources
 installed_packages = [pkg.key for pkg in pkg_resources.working_set]
 print("Installed packages:", installed_packages)
 
+import matplotlib.pyplot as plt
 import numpy as np
 import os
 import subprocess

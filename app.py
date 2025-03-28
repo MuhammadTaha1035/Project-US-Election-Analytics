@@ -1,5 +1,8 @@
 import streamlit as st
 import pandas as pd
+import subprocess
+import os
+
 try:
     import matplotlib.pyplot as plt
 except ModuleNotFoundError:
@@ -12,8 +15,8 @@ print("Installed packages:", installed_packages)
 
 import matplotlib.pyplot as plt
 import numpy as np
-import os
-import subprocess
+
+
 
 # Ensure matplotlib is installed
 

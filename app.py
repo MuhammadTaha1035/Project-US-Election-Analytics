@@ -1,19 +1,15 @@
 import streamlit as st
-import subprocess
-import os
+
 
 import sys
+import subprocess
+import sys
 
-# Grant permissions to install packages
-os.system("chmod -R 777 /home/adminuser/venv/lib/python3.12/site-packages/")
-
-
-# Ensure plotly is installed
 try:
     import plotly.express as px
 except ModuleNotFoundError:
-    subprocess.run([sys.executable, "-m", "pip", "install", "plotly"])
-    import plotly.express as px
+    subprocess.run([sys.executable, "-m", "pip", "install", "--user", "plotly"])
+    import plotly.express as px  # Retry importing after installing
 
 import plotly
 print(plotly.__version__)  # Should output something like 5.15.0+

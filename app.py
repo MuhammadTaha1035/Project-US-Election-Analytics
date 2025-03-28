@@ -2,6 +2,16 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+import os
+import subprocess
+
+# Ensure matplotlib is installed
+try:
+    import matplotlib.pyplot as plt
+except ModuleNotFoundError:
+    subprocess.check_call(["pip", "install", "matplotlib"])
+    import matplotlib.pyplot as plt
+
 import pkg_resources
 
 installed_packages = [pkg.key for pkg in pkg_resources.working_set]

@@ -1,6 +1,19 @@
 import streamlit as st
+import subprocess
+import sys
+
+# Ensure plotly is installed
+try:
+    import plotly.express as px
+except ModuleNotFoundError:
+    subprocess.run([sys.executable, "-m", "pip", "install", "plotly"])
+    import plotly.express as px
+
+import plotly
+print(plotly.__version__)  # Should output something like 5.15.0+
+
 import pandas as pd
-import plotly.express as px
+
 
 # Load dataset
 @st.cache_data

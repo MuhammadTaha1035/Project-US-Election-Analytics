@@ -2,11 +2,11 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-# Load dataset
+# ✅ Load dataset
 @st.cache_data
 def load_data():
     df = pd.read_csv("AZ Post-2024.csv")  
-    df.dropna(subset=["District ID"], inplace=True)  # Drop rows with missing District ID
+    df.dropna(subset=["District ID"], inplace=True)  # Drop rows where District ID is missing
     df["District ID"] = df["District ID"].astype(str).str.strip()  
     return df
 
@@ -15,8 +15,10 @@ df = load_data()
 # 🔹 Sidebar for chart selection
 st.sidebar.header("📌 Select Visualization")
 chart_type = st.sidebar.selectbox("Choose a Chart Type", [
+    "Presidential Election Fundings",
     "Governor Race", "Senate Race", "Secretary of State & Attorney General",
     "Age Distribution", "Income Distribution", "District-Specific Analysis"
+    
 ])
 
 # ✅ Debug: Ensure correct selection
@@ -34,7 +36,6 @@ def plot_bar_chart(columns, labels, title):
 ### 📌 Election Charts (Bar Plots)
 if chart_type == "Governor Race":
     plot_bar_chart(["G22GovD", "G22GovR"], ["Democrat", "Republican"], "🗳️ 2022 Governor Race")
-
 
 elif chart_type == "Senate Race":
     plot_bar_chart(
@@ -109,3 +110,40 @@ elif chart_type == "District-Specific Analysis":
             labels=["Democrat", "Republican", "Other"],
             title="🗳️ Senate Election"
         )
+
+### 📌 **Presidential Election Fundings (Interactive Pie Chart)**
+elif chart_type == "Presidential Election Fundings":
+    election_year = st.sidebar.selectbox("📅 Select Election Year", ["2020", "2016", "2012", "2008"])
+
+    funding_columns = {
+        "2020": ["G20PreR", "G20PreD", "G20PreO"],
+        "2016": ["G16PreR", "G16PreD", "G16PreO"],
+        "2012": ["G12PreD", "G12PreR"],
+        "2008": ["G08PreD", "G08PreR", "G08PreO"]
+    }
+
+    selected_columns = funding_columns[election_year]
+    labels = [col.replace("G", "").replace("Pre", " ") for col in selected_columns]
+
+    total_funding = df[selected_columns].sum()  # Summing values across all districts
+
+    # ✅ Function for Pie Chart (Correct Colors)
+    def plot_pie_chart(values, labels, title):
+        colors = []
+        for label in labels:
+            if "D" in label:  # Democrat
+                colors.append("blue")
+            elif "R" in label:  # Republican
+                colors.append("red")
+            else:  # Other
+                colors.append("gray")
+
+        fig = px.pie(names=labels, values=values, title=title, color=labels, 
+                     color_discrete_map=dict(zip(labels, colors)))
+        st.plotly_chart(fig)
+
+    plot_pie_chart(
+        values=total_funding,
+        labels=labels,
+        title=f"💰 Presidential Election Fundings ({election_year})"
+    )

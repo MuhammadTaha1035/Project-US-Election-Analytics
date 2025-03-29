@@ -110,6 +110,7 @@ elif chart_type == "District-Specific Analysis":
             labels=["Democrat", "Republican", "Other"],
             title="🗳️ Senate Election"
         )
+###comments
 
 ### 📌 **Presidential Election Fundings (Interactive Pie Chart)**
 elif chart_type == "Presidential Election Fundings":
